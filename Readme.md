@@ -1,6 +1,6 @@
 # Arquitectura MVC
 
-Aplicación que trabaja con objetos coches, modifica la velocidad y la muestra
+Aplicación que crea y modifica la velocidad de un coche, este tambien muestra el coche creado anteriormente y su velocidad.
 
 ---
 ## Diagrama de clases:

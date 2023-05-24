@@ -11,6 +11,7 @@ public class GUI {
     private JLabel eMatricula;
     private JButton button1;
     private JButton button2;
+    private JButton mostrarCocheButton;
 
     public GUI() {
         bCrear.addActionListener(new ActionListener() {
@@ -31,8 +32,17 @@ public class GUI {
                 Controller.aumentarVelocidad(tMatricula.getText());
             }
         });
+        mostrarCocheButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Controller.buscarCoche(tMatricula.getText());
+            }
+        });
     }
 
+    /***
+     * Inicia la interfaz grafica
+     */
     public static void crearVentana() {
         JFrame frame = new JFrame("Ventana coches");
         frame.setContentPane(new GUI().panel1);
