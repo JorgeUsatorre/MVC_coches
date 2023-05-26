@@ -88,41 +88,28 @@ Ejemplo básico del procedimiento, sin utilizar los nombres de los métodos
 
 ```mermaid
 sequenceDiagram
-    participant Usuario
-    participant Controller
     participant Model
+    participant Controller
     participant View
-    participant GUI
     participant ObsExceso
     participant Dialog
 
-    Usuario->>+Controller: Ejecutar programa
-    Controller->>+GUI: Crear ventana
-    GUI-->>-Controller: Ventana creada
-    Usuario->>+Controller: Crear coche
-    Controller->>+Model: Crear coche
-    Model-->>-Controller: Coche creado
-    Controller->>+View: Mostrar velocidad
-    View-->>-Controller: Velocidad mostrada
-    Controller->>+ObsExceso: Actualizar velocidad
-    ObsExceso-->>-View: Mostrar alerta
-    Controller->>+Model: Aumentar velocidad
-    Model-->>-Controller: Velocidad actualizada
-    Controller->>+View: Mostrar velocidad
-    View-->>-Controller: Velocidad mostrada
-
-    alt Velocidad excedida
-    Controller->>+Dialog: Mostrar alerta
-    Dialog-->>-Controller: Alerta mostrada
-    end
-
-    Controller->>+Model: Disminuir velocidad
-    Model-->>-Controller: Velocidad actualizada
-    Controller->>+View: Mostrar velocidad
-    View-->>-Controller: Velocidad mostrada
-
-    Usuario->>-Controller: Salir del programa
-    Controller-->>-Usuario: Programa finalizado
+    Controller->>Model: Puedes crear un coche?
+    activate Model
+    Model-->>Controller: Creado!
+    deactivate Model
+    Controller->>+View: Muestra la velocidad, porfa
+    activate View
+    View->>-View: Mostrando velocidad
+    View-->>Controller: Listo!
+    deactivate View
+    Controller->>+ObsExceso: update(Observable, Coche)
+    activate ObsExceso
+    ObsExceso->>+Dialog: vDialogo("Alerta: Velocidad excedida!")
+    activate Dialog
+    Dialog-->>-ObsExceso: Alerta mostrada
+    deactivate Dialog
+    deactivate ObsExceso
 ```
 
 
@@ -130,41 +117,29 @@ El mismo diagrama con los nombres de los métodos
 
 ```mermaid
 sequenceDiagram
-    participant Usuario
-    participant Controller
     participant Model
+    participant Controller
     participant View
-    participant GUI
     participant ObsExceso
     participant Dialog
 
-    Usuario->>+Controller: Ejecutar programa
-    Controller->>+GUI: crearVentana()
-    GUI-->>-Controller: Ventana creada
-    Usuario->>+Controller: crearCoche(modelo, matricula)
-    Controller->>+Model: crearCoche(modelo, matricula)
-    Model-->>-Controller: Coche creado
-    Controller->>+View: muestraVelocidad(matricula, velocidad)
-    View-->>-Controller: Velocidad mostrada
+    Controller->>Model: crearCoche("Mercedes", "BXK 1234")
+    activate Model
+    Model-->>Controller: Coche
+    deactivate Model
+    Controller->>+View: muestraVelocidad("BXK 1234", velocidad)
+    activate View
+    View->>-View: System.out.println()
+    View-->>Controller: boolean
+    deactivate View
     Controller->>+ObsExceso: update(Observable, Coche)
-    ObsExceso-->>-View: muestraAlertaVelocidadExcedida()
-    Controller->>+Model: subirVelocidad(matricula)
-    Model-->>-Controller: Velocidad actualizada
-    Controller->>+View: muestraVelocidad(matricula, velocidad)
-    View-->>-Controller: Velocidad mostrada
+    activate ObsExceso
+    ObsExceso->>+Dialog: vDialogo("Alerta: Velocidad excedida!")
+    activate Dialog
+    Dialog-->>-ObsExceso: Alerta mostrada
+    deactivate Dialog
+    deactivate ObsExceso
 
-    alt Velocidad excedida
-    Controller->>+Dialog: vDialogo("Alerta: Velocidad excedida!")
-    Dialog-->>-Controller: Alerta mostrada
-    end
-
-    Controller->>+Model: bajarVelocidad(matricula)
-    Model-->>-Controller: Velocidad actualizada
-    Controller->>+View: muestraVelocidad(matricula, velocidad)
-    View-->>-Controller: Velocidad mostrada
-
-    Usuario->>-Controller: Salir del programa
-    Controller-->>-Usuario: Programa finalizado
 ```
 
 
