@@ -10,6 +10,10 @@ public class Dialog extends JDialog{
         setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
+    /**
+     * Muestra un diálogo con el mensaje especificado.
+     * @param mensajito
+     */
     public static void vDialogo(String mensajito){
         Dialog dialogo = new Dialog();
         dialogo.pack();

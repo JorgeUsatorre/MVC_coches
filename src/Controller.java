@@ -4,10 +4,16 @@ public class Controller {
     public static void main(String[] args) {
         OVelocidad oVelocidad = new OVelocidad();
         miModelo.addObserver(oVelocidad);
+
+        ObsExceso obsExceso = new ObsExceso();
+        miModelo.addObserver(obsExceso);
+
         GUI.crearVentana();
     }
 
     /**
+     * Crea un coche con el modelo y la matricula correspondiente.
+     * Si el coche se crea correctamente, se muestra la velocidad.
      * @param modelo
      * @param matricula
      */
@@ -19,6 +25,7 @@ public class Controller {
     }
 
     /**
+     * Reduce la velocidad del coche con la matrícula especificada.
      * @param matricula
      */
     public static void bajarVelocidad(String matricula){
@@ -26,6 +33,7 @@ public class Controller {
     }
 
     /**
+     * Aumenta la velocidad del coche con la matrícula especificada.
      * @param matricula
      */
     public static void aumentarVelocidad(String matricula){

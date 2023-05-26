@@ -2,10 +2,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class OVelocidad implements Observer {
-    View miVista = new View();
+    View miVistaa = new View();
 
     /**
-     * oberva cuando cambia la velocidad
+     * Método que se ejecuta cuando cambia la velocidad de un coche.
      * @param o     the observable object.
      * @param arg   an argument passed to the {@code notifyObservers}
      *                 method.
@@ -14,6 +14,6 @@ public class OVelocidad implements Observer {
     public void update(Observable o, Object arg) {
         //Precisamos castear el objeto a Coche
         Coche obxC = (Coche) arg;
-        miVista.muestraVelocidad(obxC.matricula, obxC.velocidad);
+        miVistaa.muestraVelocidad(obxC.matricula, obxC.velocidad);
     }
 }

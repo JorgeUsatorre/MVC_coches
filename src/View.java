@@ -1,5 +1,6 @@
 public class View {
     /**
+     * Muestra la velocidad de un coche en un diálogo
      * @param matricula
      * @param v
      */

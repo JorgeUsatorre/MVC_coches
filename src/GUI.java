@@ -12,6 +12,10 @@ public class GUI {
     private JButton button1;
     private JButton button2;
 
+
+    /**
+     * Constructor de la clase GUI.
+     */
     public GUI() {
         bCrear.addActionListener(new ActionListener() {
             @Override
@@ -33,6 +37,9 @@ public class GUI {
         });
     }
 
+    /**
+     * Crea y muestra la ventana principal de la interfaz gráfica.
+     */
     public static void crearVentana() {
         JFrame frame = new JFrame("Ventana coches");
         frame.setContentPane(new GUI().panel1);

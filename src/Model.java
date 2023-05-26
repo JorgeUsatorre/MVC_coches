@@ -5,7 +5,7 @@ public class Model extends Observable {
     static ArrayList<Coche> parking = new ArrayList<>();
 
     /**
-     * Crea un coche y lo mete en el parking
+     * Crea un coche con el modelo y la matrícula especificados y lo agrega al parking.
      * @param modelo del coche
      * @param matricula identificador unico
      * @return el coche creado
@@ -17,8 +17,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Al cambiar la velocidad se da cuenta del cambio
-     * y se lo notifica al observer
+     * Cambia la velocidad de un coche y notifica a los observadores del cambio.
      * @param matricula
      * @param v nueva velocidad
      */
@@ -32,7 +31,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Busca coche segun matricula
+     * Busca coche segun matricula.
      * @param matricula a buscar
      * @return chche o null si no existe
      */
@@ -48,8 +47,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Al cambiar la velocidad se da cuenta del cambio
-     * y se lo notifica al observer
+     * Aumenta la velocidad de un coche y notifica a los observadores del cambio.
      * @param matricula
      */
     public void subirVelocidad(String matricula) {
@@ -62,8 +60,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Al cambiar la velocidad se da cuenta del cambio
-     * y se lo notifica al observer
+     * Reduce la velocidad de un coche y notifica a los observadores del cambio.
      * @param matricula
      */
     public void bajarVelocidad(String matricula) {
@@ -77,7 +74,7 @@ public class Model extends Observable {
     }
 
     /**
-     * Ddevuelve la velocidad segun la matricula
+     * Obtiene la velocidad de un coche según su matrícula.
      * @param matricula
      * @return
      */
