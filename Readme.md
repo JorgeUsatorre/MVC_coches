@@ -15,25 +15,64 @@ Este programa implementa un sistema de gestión de coches utilizando el patrón 
 ```mermaid
 classDiagram
     class Coche {
-        String: matricula
-        String: modelo
-        Integer: velocidad
+        - String matricula
+        - String modelo
+        - Integer velocidad
+        --
+        + Coche(modelo: String, matricula: String)
     }
-      class Controller{
-          +main()
-      }
-      class View {+muestraVelocidad(String, Integer)}
-      class Model {
-          ArrayList~Coche~: parking
-          +crearCoche(String, String, String)
-          +getCoche(String)
-          +cambiarVelocidad(String, Integer)
-          +getVelocidad(String)
-      }
-    Controller "1" *-- "1" Model : association
-    Controller "1" *-- "1" View : association
-    Model "1" *-- "1..n" Coche : association
-      
+
+    class Controller {
+        - static Model miModelo
+        - static View miVista
+        --
+        + main(args: String[]): void
+        + crearCoche(modelo: String, matricula: String): void
+        + bajarVelocidad(matricula: String): void
+        + aumentarVelocidad(matricula: String): void
+    }
+
+    class Model {
+        - static ArrayList<Coche> parking
+        --
+        + crearCoche(modelo: String, matricula: String): Coche
+        + cambiarVelocidad(matricula: String, v: Integer): void
+        + getCoche(matricula: String): Coche
+        + subirVelocidad(matricula: String): void
+        + bajarVelocidad(matricula: String): void
+        + getVelocidad(matricula: String): Integer
+    }
+    
+    class View {
+        --
+        + muestraVelocidad(matricula: String, v: Integer): void
+    }
+
+    class ObsExceso {
+        - View miVista
+        --
+        + update(o: Observable, arg: Object): void
+    }
+
+    class GUI {
+        --
+        + crearVentana(): void
+    }
+
+    class Dialog {
+        --
+        + vDialogo(mensajito: String): void
+    }
+
+    Coche --> Model
+    Controller --> Model
+    Controller --> View
+    Controller --> GUI
+    Model --> Coche
+    Model --> Observable
+    View --> Dialog
+    ObsExceso --> Observer
+    ObsExceso --> Coche
 ```
 
 ---
@@ -45,34 +84,81 @@ Ejemplo básico del procedimiento, sin utilizar los nombres de los métodos
 
 ```mermaid
 sequenceDiagram
-    participant Model
+    participant Usuario
     participant Controller
+    participant Model
     participant View
-    Controller->>Model: Puedes crear un coche?
-    activate Model
-    Model-->>Controller: Creado!
-    deactivate Model
-    Controller->>+View: Muestra la velocidad, porfa
-    activate View
-    View->>-View: Mostrando velocidad
-    View-->>Controller: Listo!
-    deactivate View
+    participant GUI
+    participant ObsExceso
+    participant Dialog
+
+    Usuario->>+Controller: Ejecutar programa
+    Controller->>+GUI: Crear ventana
+    GUI-->>-Controller: Ventana creada
+    Usuario->>+Controller: Crear coche
+    Controller->>+Model: Crear coche
+    Model-->>-Controller: Coche creado
+    Controller->>+View: Mostrar velocidad
+    View-->>-Controller: Velocidad mostrada
+    Controller->>+ObsExceso: Actualizar velocidad
+    ObsExceso-->>-View: Mostrar alerta
+    Controller->>+Model: Aumentar velocidad
+    Model-->>-Controller: Velocidad actualizada
+    Controller->>+View: Mostrar velocidad
+    View-->>-Controller: Velocidad mostrada
+
+    alt Velocidad excedida
+    Controller->>+Dialog: Mostrar alerta
+    Dialog-->>-Controller: Alerta mostrada
+    end
+
+    Controller->>+Model: Disminuir velocidad
+    Model-->>-Controller: Velocidad actualizada
+    Controller->>+View: Mostrar velocidad
+    View-->>-Controller: Velocidad mostrada
+
+    Usuario->>-Controller: Salir del programa
+    Controller-->>-Usuario: Programa finalizado
 ```
 
 El mismo diagrama con los nombres de los métodos
 
 ```mermaid
 sequenceDiagram
-    participant Model
+    participant Usuario
     participant Controller
+    participant Model
     participant View
-    Controller->>Model: crearCoche("Mercedes", "NDD 7785")
-    activate Model
-    Model-->>Controller: Coche
-    deactivate Model
-    Controller->>+View: muestraVelocidad("BXK 1234", velocidad)
-    activate View
-    View->>-View: System.out.println()
-    View-->>Controller: boolean
-    deactivate View
+    participant GUI
+    participant ObsExceso
+    participant Dialog
+
+    Usuario->>+Controller: Ejecutar programa
+    Controller->>+GUI: crearVentana()
+    GUI-->>-Controller: Ventana creada
+    Usuario->>+Controller: crearCoche(modelo, matricula)
+    Controller->>+Model: crearCoche(modelo, matricula)
+    Model-->>-Controller: Coche creado
+    Controller->>+View: muestraVelocidad(matricula, velocidad)
+    View-->>-Controller: Velocidad mostrada
+    Controller->>+ObsExceso: update(Observable, Coche)
+    ObsExceso-->>-View: muestraAlertaVelocidadExcedida()
+    Controller->>+Model: subirVelocidad(matricula)
+    Model-->>-Controller: Velocidad actualizada
+    Controller->>+View: muestraVelocidad(matricula, velocidad)
+    View-->>-Controller: Velocidad mostrada
+
+    alt Velocidad excedida
+    Controller->>+Dialog: vDialogo("Alerta: Velocidad excedida!")
+    Dialog-->>-Controller: Alerta mostrada
+    end
+
+    Controller->>+Model: bajarVelocidad(matricula)
+    Model-->>-Controller: Velocidad actualizada
+    Controller->>+View: muestraVelocidad(matricula, velocidad)
+    View-->>-Controller: Velocidad mostrada
+
+    Usuario->>-Controller: Salir del programa
+    Controller-->>-Usuario: Programa finalizado
+
 ```
