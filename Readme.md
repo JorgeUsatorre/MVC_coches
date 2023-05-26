@@ -82,6 +82,10 @@ classDiagram
 Ejemplo básico del procedimiento, sin utilizar los nombres de los métodos
 
 
+
+
+
+
 ```mermaid
 sequenceDiagram
     participant Usuario
@@ -124,7 +128,7 @@ sequenceDiagram
 El mismo diagrama con los nombres de los métodos
 
 ```mermaid
-sequenceDiagram
+    sequenceDiagram
     participant Usuario
     participant Controller
     participant Model
@@ -160,5 +164,7 @@ sequenceDiagram
 
     Usuario->>-Controller: Salir del programa
     Controller-->>-Usuario: Programa finalizado
-
 ```
+
+
+
