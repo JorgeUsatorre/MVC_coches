@@ -1,14 +1,14 @@
 # Arquitectura MVC
 
-En esta rama utilizaremos el patrón Observer
+Este programa implementa un sistema de gestión de coches utilizando el patrón MVC. Se ha añadido un nuevo observer, `ObsExceso`, que muestra una alerta cuando la velocidad de un coche supera los 120 km/h.
 
-Los cambios de la velocidad que se hagan en el model serán observados por el Controller
+## Modificaciones:
 
-Para notificar a los observadores hacemos dos pasos
+- Se ha agregado la clase `ObsExceso` que implementa la interfaz `Observer`.
+- Cuando se actualiza la velocidad de un coche, el nuevo observer verifica si supera los 120 km/h.
+- Si la velocidad excede el límite, se muestra una alerta de "Velocidad Excedida" utilizando un diálogo, en el caso de que el coche no supere el velocidad límite el programa continua mostrando la velocidad del coche en cuestión.
 
-Actualizamos el estado a 'algo a cambiado' con setChanged()
-Notificamos a los observadores notifyObservers(valor)
-De esta manera se dispara en todos los observadores el método update()
+
 ---
 ## Diagrama de clases:
 
@@ -66,7 +66,7 @@ sequenceDiagram
     participant Model
     participant Controller
     participant View
-    Controller->>Model: crearCoche("Mercedes", "BXK 1234")
+    Controller->>Model: crearCoche("Mercedes", "NDD 7785")
     activate Model
     Model-->>Controller: Coche
     deactivate Model
