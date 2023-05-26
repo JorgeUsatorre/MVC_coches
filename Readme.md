@@ -125,10 +125,11 @@ sequenceDiagram
     Controller-->>-Usuario: Programa finalizado
 ```
 
+
 El mismo diagrama con los nombres de los métodos
 
 ```mermaid
-    sequenceDiagram
+sequenceDiagram
     participant Usuario
     participant Controller
     participant Model
