@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Model {
+public class Model extends Observable {
     static ArrayList<Coche> parking = new ArrayList<>();
 
     /**
-     * Crea un coche y lo mete en el parking
+     * Crea un coche con el modelo y la matrícula especificados y lo agrega al parking.
      * @param modelo del coche
      * @param matricula identificador unico
      * @return el coche creado
@@ -16,19 +17,21 @@ public class Model {
     }
 
     /**
+     * Cambia la velocidad de un coche y notifica a los observadores del cambio.
      * @param matricula
      * @param v nueva velocidad
-     * @return velocidad modificada
      */
-    public Integer cambiarVelocidad(String matricula, Integer v) {
+    public void cambiarVelocidad(String matricula, Integer v) {
         // busca el coche
         getCoche(matricula).velocidad = v;
-        // retorna la nueva velocidad
-        return getCoche(matricula).velocidad;
+        //cambia
+        setChanged();
+        // notifica del cambio
+        notifyObservers(getCoche(matricula));
     }
 
     /**
-     * Busca coche segun matricula
+     * Busca coche segun matricula.
      * @param matricula a buscar
      * @return chche o null si no existe
      */
@@ -44,29 +47,34 @@ public class Model {
     }
 
     /**
+     * Aumenta la velocidad de un coche y notifica a los observadores del cambio.
      * @param matricula
-     * @return velocidad modificada
      */
-    public Integer subirVelocidad(String matricula) {
+    public void subirVelocidad(String matricula) {
         // busca el coche y sube la velocidad
         getCoche(matricula).velocidad = getCoche(matricula).velocidad + 10;
-        // retorna la nueva velocidad
-        return getCoche(matricula).velocidad;
+        // cambia el parametro
+        setChanged();
+        //notifica al observer
+        notifyObservers(getCoche(matricula));
     }
 
     /**
+     * Reduce la velocidad de un coche y notifica a los observadores del cambio.
      * @param matricula
-     * @return velocidad modificada
      */
-    public Integer bajarVelocidad(String matricula) {
+    public void bajarVelocidad(String matricula) {
         // busca el coche y sube la velocidad
         getCoche(matricula).velocidad = getCoche(matricula).velocidad - 10;
-        // retorna la nueva velocidad
-        return getCoche(matricula).velocidad;
+        // se da cuenta de que cambió
+        setChanged();
+        //notifica al observer
+        notifyObservers(getCoche(matricula));
+
     }
 
     /**
-     * Ddevuelve la velocidad segun la matricula
+     * Obtiene la velocidad de un coche según su matrícula.
      * @param matricula
      * @return
      */
